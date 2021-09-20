@@ -55,17 +55,17 @@ type Execution struct {
 func New(fm FileManager, serv Server) Execution {
 	return Execution{
 		FileManager: fm,
-		Server: serv,
+		Server:      serv,
 	}
 }
 
 // RunInit Creating config file
-func (e Execution) RunInit () error {
+func (e Execution) RunInit() error {
 	return e.FileManager.Create([]byte(fileContent))
 }
 
 // RunServe Getting started serve
-func (e Execution)RunServe () error {
+func (e Execution) RunServe() error {
 	// reading toml
 	bytes, err := e.FileManager.Read()
 	if err != nil {

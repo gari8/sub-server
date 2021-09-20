@@ -18,5 +18,7 @@ jobs:
       - name: Get dependencies
         run: go mod download
 
+      - name: Formatting
+        run: go fmt ./...
       - name: Test code
         run: go test -v ./...

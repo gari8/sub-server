@@ -33,11 +33,11 @@ func Logo() {
 	Print(PCyan, logo)
 }
 
-func SlashAssign (text string) string {
+func SlashAssign(text string) string {
 	cut := strings.Trim(text, "/")
-	return "/"+cut
+	return "/" + cut
 }
 
-func RemoveDotSlash (text string) string {
+func RemoveDotSlash(text string) string {
 	return strings.Trim(text, "./")
 }

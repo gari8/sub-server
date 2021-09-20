@@ -20,7 +20,7 @@ const (
 	initMode  RunMode = "init"
 	serveMode RunMode = "serve"
 	fileName          = "config.toml"
-	hint = `hint: Enter the following subcommand in order for you to use this command
+	hint              = `hint: Enter the following subcommand in order for you to use this command
 
   // creating server config file
   sub-server init

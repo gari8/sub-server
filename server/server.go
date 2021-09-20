@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-type HttpServer struct {}
+type HttpServer struct{}
 
 func NewHttpServer() HttpServer {
 	return HttpServer{}
