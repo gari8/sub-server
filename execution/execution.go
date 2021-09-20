@@ -15,8 +15,8 @@ server_name = "server name"
 port = "8080"
 
 [routing]
-root_path = "_template/app/v1/test"
-origin_root = "app/v1/test"
+root_path = "."
+origin_root = "/app/v1/test"
 
 [[routing.origins]]
 id = 0
