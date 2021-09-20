@@ -21,6 +21,9 @@ $ vim index.json
 # ... 
 ```
 
+# JSON example
+https://github.com/gari8/mock-server-by-sub-server
+
 ### index.json
 ```json: index.json
 [
