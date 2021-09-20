@@ -92,7 +92,7 @@ func (e Execution)RunServe () error {
 			return err
 		}
 		for _, origin := range stg.Origins {
-			if format.RemoveDotSlash(stg.RootPath)+format.SlashAssign(origin.FilePath) == path {
+			if format.RemoveDotSlash(stg.RootPath+format.SlashAssign(origin.FilePath)) == path {
 				origin.Content = bytes
 				newOrigins = append(newOrigins, origin)
 			}
