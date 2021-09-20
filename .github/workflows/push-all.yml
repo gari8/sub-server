@@ -40,4 +40,4 @@ jobs:
           GOPATH: /home/runner/work/
         run: |
           go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-          GOCILINT=${GOPATH}/bin/golangci-lint run
+          golangci-lint run
