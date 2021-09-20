@@ -37,3 +37,7 @@ func SlashAssign (text string) string {
 	cut := strings.Trim(text, "/")
 	return "/"+cut
 }
+
+func RemoveDotSlash (text string) string {
+	return strings.Trim(text, "./")
+}

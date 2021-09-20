@@ -10,3 +10,9 @@ func TestSlashAssign(t *testing.T) {
 	textWithoutSlash := "app/v1/target"
 	assert.Equal(t, textWithSlash, SlashAssign(textWithoutSlash))
 }
+
+func TestRemoveDotSlash(t *testing.T) {
+	textWithDotSlash := "./app/v1/target"
+	textWithoutDotSlash := "app/v1/target"
+	assert.Equal(t, RemoveDotSlash(textWithDotSlash), textWithoutDotSlash)
+}
