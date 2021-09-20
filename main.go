@@ -6,6 +6,7 @@ import (
 	"github.com/gari8/sub-server/execution"
 	fileManager "github.com/gari8/sub-server/file-manager"
 	"github.com/gari8/sub-server/server"
+	"github.com/gari8/sub-server/tools/format"
 	"os"
 )
 
@@ -19,6 +20,14 @@ const (
 	initMode  RunMode = "init"
 	serveMode RunMode = "serve"
 	fileName          = "config.toml"
+	hint = `hint: Enter the following subcommand in order for you to use this command
+
+  // creating server config file
+  sub-server init
+
+  // Starting the server
+  sub-server serve
+`
 )
 
 func main() {
@@ -47,5 +56,7 @@ func main() {
 		if err != nil {
 			_, _ = fmt.Fprintf(os.Stderr, "Error: %+v", err)
 		}
+	default:
+		format.Print(format.PYellow, hint)
 	}
 }
