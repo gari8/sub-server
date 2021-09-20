@@ -80,3 +80,33 @@ $ sub-server serve
         POST >> http://localhost:8080/app/v1/start
 
 ```
+
+# How to write config.toml
+```toml
+[app] # App resource
+server_name = "server name"
+port = "8080" # server port
+
+[routing]
+root_path = "." # JSON root path at local
+origin_root = "/app/v1" # server url root
+
+# ↓ routing resources
+[[routing.origins]]
+id = 0 # unique id
+uri = "/start" # server url after origin_root
+file_path = "index.json" # JSON path at local after root_path
+method = "GET"
+
+[[routing.origins]]
+id = 1
+uri = "/start/1"
+file_path = "1/index.json"
+method = "GET"
+
+[[routing.origins]]
+id = 2
+uri = "/start"
+file_path = "post.json"
+method = "POST"
+```
