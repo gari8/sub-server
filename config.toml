@@ -4,22 +4,22 @@ port = "8080"
 
 [routing]
 root_path = "."
-origin_root = "/app/v1/test"
+origin_root = "/app/v1"
 
 [[routing.origins]]
 id = 0
 uri = "/start"
-file_path = "/start/index.json"
+file_path = "/index.json"
 method = "GET"
 
 [[routing.origins]]
 id = 1
 uri = "/start/1"
-file_path = "/start/1/index.json"
+file_path = "/1/index.json"
 method = "GET"
 
 [[routing.origins]]
 id = 2
 uri = "/start"
-file_path = "/start/index.json"
+file_path = "/post.json"
 method = "POST"
