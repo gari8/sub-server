@@ -72,6 +72,8 @@ $ sub-server serve
         ╚═════╝░░╚═════╝░╚═════╝░  ╚═════╝░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝
 
 
-        GET >> http://app/v1/start
-        ...
+        GET >> http://localhost:8080/app/v1/start/1
+        GET >> http://localhost:8080/app/v1/start
+        POST >> http://localhost:8080/app/v1/start
+
 ```
