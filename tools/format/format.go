@@ -1,6 +1,9 @@
 package format
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 const (
 	PBlack = iota + 30
@@ -28,4 +31,9 @@ func Print(number int, str string) {
 
 func Logo() {
 	Print(PCyan, logo)
+}
+
+func SlashAssign (text string) string {
+	cut := strings.Trim(text, "/")
+	return "/"+cut
 }

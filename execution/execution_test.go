@@ -2,7 +2,6 @@ package execution
 
 import (
 	"errors"
-	fileManager "github.com/gari8/sub-server/file-manager"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -18,18 +17,23 @@ func getFileManager(t *testing.T) *MockFileManager {
 	return NewMockFileManager(ctrl)
 }
 
+func getServer(t *testing.T) *MockServer {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+	return NewMockServer(ctrl)
+}
+
 func TestNew(t *testing.T) {
-	fm := fileManager.FileManager{
-		FileName:    TestFilePath,
-	}
-	assert.Equal(t, Execution{fm}, New(fm))
+	fm := getFileManager(t)
+	sr := getServer(t)
+	assert.Equal(t, Execution{fm, sr}, New(fm, sr))
 }
 
 func TestRunInit(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		fm := getFileManager(t)
 		fm.EXPECT().Create(gomock.Any()).Return(nil).AnyTimes()
-		e := New(fm)
+		e := New(fm, nil)
 		assert.Equal(t, nil, e.RunInit())
 	})
 
@@ -37,7 +41,7 @@ func TestRunInit(t *testing.T) {
 		fm := getFileManager(t)
 		err := errors.New("TEST")
 		fm.EXPECT().Create(gomock.Any()).Return(err).AnyTimes()
-		e := New(fm)
+		e := New(fm, nil)
 		assert.Equal(t, err, e.RunInit())
 	})
 }
@@ -45,8 +49,10 @@ func TestRunInit(t *testing.T) {
 func TestRunServe(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		fm := getFileManager(t)
+		sr := getServer(t)
 		fm.EXPECT().Read().Return([]byte(fileContent), nil).AnyTimes()
-		e := New(fm)
+		sr.EXPECT().Serve(gomock.Any()).Return(nil).AnyTimes()
+		e := New(fm, sr)
 
 		err := e.RunServe()
 		assert.NoError(t, err)
@@ -55,8 +61,10 @@ func TestRunServe(t *testing.T) {
 	t.Run("error", func(t *testing.T) {
 		err := errors.New("TEST")
 		fm := getFileManager(t)
+		sr := getServer(t)
 		fm.EXPECT().Read().Return(nil, err).AnyTimes()
-		e := New(fm)
+		sr.EXPECT().Serve(gomock.Any()).Return(err).AnyTimes()
+		e := New(fm, sr)
 
 		err = e.RunServe()
 		assert.Error(t, err)

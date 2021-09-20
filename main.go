@@ -33,14 +33,14 @@ func main() {
 
 	switch config.Mode {
 	case initMode:
-		fm := fileManager.New(fileName)
+		fm := fileManager.NewFileManager(fileName)
 		e := execution.New(fm, nil)
 		err := e.RunInit()
 		if err != nil {
 			_, _ = fmt.Fprintf(os.Stderr, "Error: %+v", err)
 		}
 	case serveMode:
-		fm := fileManager.New(fileName)
+		fm := fileManager.NewFileManager(fileName)
 		s := server.NewHttpServer()
 		e := execution.New(fm, s)
 		err := e.RunServe()

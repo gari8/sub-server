@@ -16,24 +16,24 @@ port = "8080"
 
 [routing]
 root_path = "."
-origin_root = "/app/v1/test"
+origin_root = "/app/v1"
 
 [[routing.origins]]
 id = 0
 uri = "/start"
-file_path = "/start/index.json"
+file_path = "index.json"
 method = "GET"
 
 [[routing.origins]]
 id = 1
 uri = "/start/1"
-file_path = "/start/1/index.json"
+file_path = "1/index.json"
 method = "GET"
 
 [[routing.origins]]
 id = 2
 uri = "/start"
-file_path = "/start/index.json"
+file_path = "post.json"
 method = "POST"`
 )
 
@@ -51,7 +51,7 @@ type Execution struct {
 	Server
 }
 
-// New Executionを作成
+// New Creating Execution struct
 func New(fm FileManager, serv Server) Execution {
 	return Execution{
 		FileManager: fm,
@@ -59,29 +59,26 @@ func New(fm FileManager, serv Server) Execution {
 	}
 }
 
+// RunInit Creating config file
 func (e Execution) RunInit () error {
 	return e.FileManager.Create([]byte(fileContent))
 }
 
+// RunServe Getting started serve
 func (e Execution)RunServe () error {
-	// toml 読み込み
+	// reading toml
 	bytes, err := e.FileManager.Read()
-	hasToml := true
 	if err != nil {
-		format.Print(format.PCyan, "No config file")
-		hasToml = false
+		return err
 	}
 
-	// toml 書き出し
+	// writing toml
 	stg := setting.NewSetting()
-	if hasToml {
-		err := stg.ReadToml(string(bytes))
-		if err != nil {
-			return err
-		}
+	if err := stg.ReadToml(string(bytes)); err != nil {
+		return err
 	}
 
-	// json 読み込み
+	// reading json
 	var newOrigins []setting.Origin
 	if err := filepath.Walk(stg.TomlSetting.RootPath, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
@@ -95,7 +92,7 @@ func (e Execution)RunServe () error {
 			return err
 		}
 		for _, origin := range stg.Origins {
-			if stg.RootPath+origin.FilePath == path {
+			if stg.RootPath+format.SlashAssign(origin.FilePath) == path {
 				origin.Content = bytes
 				newOrigins = append(newOrigins, origin)
 			}
@@ -106,6 +103,6 @@ func (e Execution)RunServe () error {
 	}
 	stg.Origins = newOrigins
 
-	// server 起動
+	// server
 	return e.Server.Serve(stg)
 }

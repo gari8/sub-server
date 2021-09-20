@@ -9,7 +9,7 @@ type FileManager struct {
 	FileName string
 }
 
-func New(filePath string) FileManager {
+func NewFileManager(filePath string) FileManager {
 	return FileManager{
 		FileName: filePath,
 	}
