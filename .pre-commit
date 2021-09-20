@@ -1,7 +1,0 @@
-#!/bin/sh
-
-echo "Info: Running formatter"
-
-go fmt
-
-echo "Info: go fmt --- OK"
