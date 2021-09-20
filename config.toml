@@ -1,0 +1,25 @@
+[app]
+server_name = "server name"
+port = "8080"
+
+[routing]
+root_path = "_template/app/v1/test"
+origin_root = "/app/v1/test"
+
+[[routing.origins]]
+id = 0
+uri = "/start"
+file_path = "/start/index.json"
+method = "GET"
+
+[[routing.origins]]
+id = 1
+uri = "/start/1"
+file_path = "/start/1/index.json"
+method = "GET"
+
+[[routing.origins]]
+id = 2
+uri = "/start"
+file_path = "/start/index.json"
+method = "POST"
