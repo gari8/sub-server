@@ -2,6 +2,7 @@ package execution
 
 import (
 	"errors"
+	"github.com/gari8/sub-server/tools/format"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -34,7 +35,7 @@ func TestRunInit(t *testing.T) {
 		fm := getFileManager(t)
 		fm.EXPECT().Create(gomock.Any()).Return(nil).AnyTimes()
 		e := New(fm, nil)
-		assert.Equal(t, nil, e.RunInit())
+		assert.Equal(t, nil, e.RunInit([]byte(format.FileContent)))
 	})
 
 	t.Run("error", func(t *testing.T) {
@@ -42,7 +43,7 @@ func TestRunInit(t *testing.T) {
 		err := errors.New("TEST")
 		fm.EXPECT().Create(gomock.Any()).Return(err).AnyTimes()
 		e := New(fm, nil)
-		assert.Equal(t, err, e.RunInit())
+		assert.Equal(t, err, e.RunInit([]byte(format.FileContent)))
 	})
 }
 
@@ -50,7 +51,7 @@ func TestRunServe(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		fm := getFileManager(t)
 		sr := getServer(t)
-		fm.EXPECT().Read().Return([]byte(fileContent), nil).AnyTimes()
+		fm.EXPECT().Read().Return([]byte(format.FileContent), nil).AnyTimes()
 		sr.EXPECT().Serve(gomock.Any()).Return(nil).AnyTimes()
 		e := New(fm, sr)
 
