@@ -17,10 +17,12 @@ type Config struct {
 }
 
 const (
-	initMode  RunMode = "init"
-	serveMode RunMode = "serve"
-	fileName          = "config.toml"
-	hint              = `hint: Enter the following subcommand in order for you to use this command
+	initMode              RunMode = "init"
+	serveMode             RunMode = "serve"
+	configFileName                = "config.toml"
+	responseIndexFileName         = "index.json"
+	responsePostFileName          = "post.json"
+	hint                          = `hint: Enter the following subcommand in order for you to use this command
 
   // creating server config file
   sub-server init
@@ -42,14 +44,23 @@ func main() {
 
 	switch config.Mode {
 	case initMode:
-		fm := fileManager.NewFileManager(fileName)
-		e := execution.New(fm, nil)
-		err := e.RunInit()
+		if err := execution.New(fileManager.NewFileManager(configFileName),
+			nil).RunInit([]byte(format.FileContent)); err != nil {
+			_, _ = fmt.Fprintf(os.Stderr, "Error: %+v", err)
+		}
+
+		if err := execution.New(fileManager.NewFileManager(responseIndexFileName),
+			nil).RunInit([]byte(format.ResponseIndexFileContent)); err != nil {
+			_, _ = fmt.Fprintf(os.Stderr, "Error: %+v", err)
+		}
+
+		err := execution.New(fileManager.NewFileManager(responsePostFileName),
+			nil).RunInit([]byte(format.ResponsePostFileContent))
 		if err != nil {
 			_, _ = fmt.Fprintf(os.Stderr, "Error: %+v", err)
 		}
 	case serveMode:
-		fm := fileManager.NewFileManager(fileName)
+		fm := fileManager.NewFileManager(configFileName)
 		s := server.NewHttpServer()
 		e := execution.New(fm, s)
 		err := e.RunServe()

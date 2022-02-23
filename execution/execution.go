@@ -9,31 +9,6 @@ import (
 	"path/filepath"
 )
 
-const (
-	fileContent = `[app]
-server_name = "server name"
-port = "8080"
-
-[routing]
-root_path = "."
-origin_root = "/app/v1"
-
-[[routing.origins]]
-uri = "/start"
-file_path = "index.json"
-method = "GET"
-
-[[routing.origins]]
-uri = "/start/1"
-file_path = "1/index.json"
-method = "GET"
-
-[[routing.origins]]
-uri = "/start"
-file_path = "post.json"
-method = "POST"`
-)
-
 type FileManager interface {
 	Create(content []byte) error
 	Read() ([]byte, error)
@@ -57,8 +32,8 @@ func New(fm FileManager, serv Server) Execution {
 }
 
 // RunInit Creating config file
-func (e Execution) RunInit() error {
-	return e.FileManager.Create([]byte(fileContent))
+func (e Execution) RunInit(content []byte) error {
+	return e.FileManager.Create(content)
 }
 
 // RunServe Getting started serve

@@ -16,7 +16,6 @@ const (
 
 func getMockOrigin(method string) setting.Origin {
 	return setting.Origin{
-		ID:       1,
 		URI:      "/app/v1/start",
 		FilePath: ".",
 		Method:   method,
