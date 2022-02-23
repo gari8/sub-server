@@ -91,21 +91,18 @@ port = "8080" # server port
 root_path = "." # JSON root path at local
 origin_root = "/app/v1" # server url root
 
-# ↓ routing resources
+# routing resources
 [[routing.origins]]
-id = 0 # unique id
 uri = "/start" # server url after origin_root
 file_path = "index.json" # JSON path at local after root_path
 method = "GET"
 
 [[routing.origins]]
-id = 1
 uri = "/start/1"
 file_path = "1/index.json"
 method = "GET"
 
 [[routing.origins]]
-id = 2
 uri = "/start"
 file_path = "post.json"
 method = "POST"

@@ -37,7 +37,6 @@ type Routing struct {
 }
 
 type Origin struct {
-	ID       uint32 `toml:"id"`
 	URI      string `toml:"uri"`
 	FilePath string `toml:"file_path"`
 	Method   string `toml:"method"`
