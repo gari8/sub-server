@@ -9,7 +9,7 @@ $ go install github.com/gari8/sub-server@latest
 ```bash
 $ mkdir mock-server && cd mock-server
 
-# creating config file
+# creating config file & examples (index.json & post.json)
 $ sub-server init
 
 # running mock-server
